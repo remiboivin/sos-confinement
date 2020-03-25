@@ -12,21 +12,15 @@
 #  updated_at             :datetime         not null
 #
 class User < ApplicationRecord
-  has_and_belongs_to_many :roles
-  has_many :consultations
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable
 
-  def has_role?(role_sym)
-    roles.any? { |r| r.name.underscore.to_sym == role_sym }
-  end
+  has_many :consultations
+  has_many :doctors, through: :consultations
 
-  def add_role(role)
-    roles << Role.find_by(name: role)
-  end
-  def remove_role(role)
-    roles.delete(Role.find_by(name: role))
-  end
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: { scope: :last_name }
 end

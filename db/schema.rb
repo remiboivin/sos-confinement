@@ -10,33 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_135714) do
+ActiveRecord::Schema.define(version: 2020_03_25_204825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "availabilities", force: :cascade do |t|
+    t.bigint "doctor_id"
+    t.datetime "datetime_start"
+    t.datetime "datetime_end"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["doctor_id"], name: "index_availabilities_on_doctor_id"
+  end
+
   create_table "consultations", force: :cascade do |t|
-    t.bigint "psy_id"
-    t.bigint "patient_id"
-    t.date "date"
-    t.time "time"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["patient_id"], name: "index_consultations_on_patient_id"
-    t.index ["psy_id"], name: "index_consultations_on_psy_id"
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.bigint "role_id"
     t.bigint "user_id"
-    t.index ["role_id"], name: "index_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_roles_users_on_user_id"
+    t.bigint "availability_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["availability_id"], name: "index_consultations_on_availability_id"
+    t.index ["user_id"], name: "index_consultations_on_user_id"
+  end
+
+  create_table "doctors", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_doctors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_doctors_on_reset_password_token", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,12 +53,15 @@ ActiveRecord::Schema.define(version: 2020_03_24_135714) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "consultations", "users", column: "patient_id"
-  add_foreign_key "consultations", "users", column: "psy_id"
+  add_foreign_key "availabilities", "doctors"
+  add_foreign_key "consultations", "availabilities"
+  add_foreign_key "consultations", "users"
 end

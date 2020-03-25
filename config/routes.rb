@@ -43,7 +43,23 @@
 
 Rails.application.routes.draw do
 
-  devise_for :users,
+  devise_for :doctors, path: 'doctors',
+    controllers: {
+      sessions: 'doctors/sessions',
+      confirmations: 'doctors/confirmations',
+      passwords: 'doctors/passwords',
+      registrations:'doctors/registrations',
+      unlocks: 'doctors/unlocks',
+    }
+
+  devise_for :users, path: 'users',
+    controllers: {
+      sessions: 'users/sessions',
+      confirmations: 'users/confirmations',
+      passwords: 'users/passwords',
+      registrations:'users/registrations',
+      unlocks: 'users/unlocks',
+    },
          :skip => [:registrations, :sessions]
   devise_scope :user do
     get '/s-inscrire', to: "user/registrations#new", as: :new_user_registration
