@@ -50,7 +50,15 @@ Rails.application.routes.draw do
       passwords: 'doctors/passwords',
       registrations:'doctors/registrations',
       unlocks: 'doctors/unlocks',
-    }
+    },
+           :skip => [:registrations, :sessions]
+    devise_scope :doctor do
+      get '/s-inscrire', to: "doctor/registrations#new", as: :new_doctor_registration
+      post '/s-inscrire', to: "doctor/registrations#create", as: :doctor_registration
+      get '/se-connecter', to: "doctor/sessions#new", as: :new_doctor_session
+      post '/se-connecter', to: "doctor/sessions#create", as: :doctor_session
+      get '/se-deconnecter', to: 'doctor/sessions#destroy', as: :doctor_destroy_session
+    end
 
   devise_for :users, path: 'users',
     controllers: {
@@ -79,6 +87,10 @@ Rails.application.routes.draw do
 
   match '*path' => 'errors#error_404', via: :all
 
-  resources :user, only: [:index, :show, :create]
+  resources :users, only: [:index, :show, :create]
+
+  resources :doctors
+
+  resources :consultations [:index, :show, :new, :create, :destroy]
 
 end
