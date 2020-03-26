@@ -1,1 +1,33 @@
 <h1>This is Consultations#index</h1>
+
+<h2>Next consultations</h2>
+
+<% if @upcoming_consultations.empty? %>
+  <p>No consultation planned</p>
+<% else %>
+  <ul>
+    <% @upcoming_consultations.each do |consultation| %>
+      <%= link_to(consultation) do %>
+        <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <p><%= consultation.datetime_start %></p>
+        <p><%= consultation.datetime_end %></p>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>Previous consultations</h2>
+
+<% if @past_consultations.empty? %>
+  <p>No consultation done yet</p>
+<% else %>
+  <ul>
+    <% @past_consultations.each do |consultation| %>
+      <%= link_to(consultation) do %>
+        <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <p><%= consultation.datetime_start %></p>
+        <p><%= consultation.datetime_end %></p>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>

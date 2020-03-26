@@ -1,1 +1,20 @@
-<h1>This Consultations#edit</h1>
+<h1>This is Consultations#edit</h1>
+
+<h2>Consultation with <%= @consultation.doctor.first_name %> <%= @consultation.doctor.last_name %></h2>
+<h3><%= @consultation.doctor.specialty%></h3>
+
+
+<h4>Avalabilities</h4>
+<ul>
+  <%@consultation.doctor.availabilities.each do |availability|%>
+    <li><%= availability.datetime_start %> - <%= availability.datetime_end %></li>
+  <% end %>
+
+</ul>
+
+
+<%= simple_form_for @consultation do |f| %>
+  <%= f.input :datetime_start %>
+  <%= f.input :datetime_end %>
+  <%= f.button :submit, "Change Consultation" %>
+<% end %>

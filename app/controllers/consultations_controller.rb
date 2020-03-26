@@ -1,17 +1,18 @@
 class ConsultationsController < ApplicationController
   before_action :check_user
 
-  before_action :set_consultation, only: [:edit, :update, :destroy]
-
   before_action :set_consultations, except: [:new, :create]
+  before_action :set_consultation, only: [:show, :edit, :update, :destroy]
+
 
   def index
+    set_upcoming_consultations
+    set_past_consultations
   end
 
   def show
-
     if @consultations.include?(@consultation)
-      redirect_to consultation_path(@consultation)
+      @consultation
     else
       redirect_to consultations_path
       flash[:notice] = "You are not allowed to access this consultation"
@@ -34,7 +35,7 @@ class ConsultationsController < ApplicationController
 
   def edit
     if @consultations.include?(@consultation)
-      redirect_to edit_consultation(@consultation)
+      @consultation
     else
       redirect_to consultations_path
       flash[:notice] = "You are not allowed to edit this consultation"
@@ -43,7 +44,7 @@ class ConsultationsController < ApplicationController
 
   def update
     if @consultations.include?(@consultation)
-      if @consultation.update
+      if @consultation.update(params_consultation)
         redirect_to consultation_path(@consultation)
       else
         render :edit
@@ -69,6 +70,14 @@ class ConsultationsController < ApplicationController
   end
 
   private
+
+  def set_upcoming_consultations
+    @upcoming_consultations = @consultations.select {|consultation| consultation.datetime_start && consultation.datetime_end > DateTime.now }
+  end
+
+  def set_past_consultations
+    @past_consultations = @consultations.select {|consultation| consultation.datetime_start && consultation.datetime_end < DateTime.now }
+  end
 
   def set_consultations
     @consultations = @user.consultations

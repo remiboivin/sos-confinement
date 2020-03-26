@@ -1,1 +1,13 @@
-<h1>This Consultations#show</h1>
+<h1>This is Consultations#show</h1>
+
+<h2>Consultation with <%= @consultation.doctor.first_name %> <%= @consultation.doctor.last_name %></h2>
+<h3><%= @consultation.doctor.specialty%></h3>
+
+<p>Status: <%= @consultation.status %></p>
+<p><%= @consultation.datetime_start %></p>
+<p><%= @consultation.datetime_end %></p>
+
+
+<%= link_to "Cancel Consultation", consultation_path(@consultation), method: :delete , data: { confirm: "Are you sure?" } %>
+
+<%= link_to "Edit Consultation", edit_consultation_path(@consultation) %>

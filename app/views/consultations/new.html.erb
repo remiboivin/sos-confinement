@@ -1,1 +1,8 @@
-<h1>This Consultations#new</h1>
+<h1>This is Consultations#new</h1>
+
+
+<%= simple_form_for @consultation do |f| %>
+  <%= f.input :datetime_start %>
+  <%= f.input :datetime_end %>
+  <%= f.button :submit %>
+<% end %>
