@@ -53,14 +53,14 @@ Rails.application.routes.draw do
     }, :skip => [:registrations, :sessions]
 
     devise_scope :doctor do
-      get '/docteur/s-inscrire', to: "doctor/registrations#new", as: :new_doctor_registration
-      post '/docteur/s-inscrire', to: "doctor/registrations#create", as: :doctor_registration
-      get '/docteur/se-connecter', to: "doctor/sessions#new", as: :new_doctor_session
-      post '/docteur/se-connecter', to: "doctor/sessions#create", as: :doctor_session
-      get '/docteur/se-deconnecter', to: 'doctor/sessions#destroy', as: :doctor_destroy_session
+      get '/docteur/s-inscrire', to: "doctors/registrations#new", as: :new_doctor_registration
+      post '/docteur/s-inscrire', to: "doctors/registrations#create", as: :doctor_registration
+      get '/docteur/se-connecter', to: "doctors/sessions#new", as: :new_doctor_session
+      post '/docteur/se-connecter', to: "doctors/sessions#create", as: :doctor_session
+      get '/docteur/se-deconnecter', to: 'doctors/sessions#destroy', as: :doctor_destroy_session
     end
 
-  devise_for :user, path: 'users',
+  devise_for :users, path: 'users',
     controllers: {
       sessions: 'users/sessions',
       confirmations: 'users/confirmations',
@@ -69,18 +69,16 @@ Rails.application.routes.draw do
       unlocks: 'users/unlocks',
     }, :skip => [:registrations, :sessions]
 
-  devise_scope :users do
-    get '/utilisateur/s-inscrire', to: "user/registrations#new", as: :new_user_registration
-    post '/utilisateur/s-inscrire', to: "user/registrations#create", as: :user_registration
-    get '/utilisateur/se-connecter', to: "user/sessions#new", as: :new_user_session
-    post '/utilisateur/se-connecter', to: "user/sessions#create", as: :user_session
-    get '/utilisateur/se-deconnecter', to: 'user/sessions#destroy', as: :user_destroy_session
+  devise_scope :user do
+    get '/utilisateur/s-inscrire', to: "users/registrations#new", as: :new_user_registration
+    post '/utilisateur/s-inscrire', to: "users/registrations#create", as: :user_registration
+    get '/utilisateur/se-connecter', to: "users/sessions#new", as: :new_user_session
+    post '/utilisateur/se-connecter', to: "users/sessions#create", as: :user_session
+    get '/utilisateur/se-deconnecter', to: 'users/sessions#destroy', as: :user_destroy_session
   end
 
   root to: 'home#index'
 
-  get '/admin',           to: 'admin#index'
-  get '/profil',          to: 'dashboard#index'
   get '/historique',      to: 'home#about'
   get '/nous-soutenir',   to: 'home#support'
   get '/nous-contacter',  to: 'home#contact'
