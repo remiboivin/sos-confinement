@@ -64,13 +64,13 @@ av12 = Availability.create!(doctor: doc2, datetime_start: DateTime.new(2020, 03,
 p "Creating Consultations..."
 ## CREATE CONSULTATIONS ##
 
-cons1 = Consultation.create!(user: user1, doctor: doc1, datetime_start: DateTime.new(2020, 03, 30, 8, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 9, 00, 0))
+cons1 = Consultation.create!(user: user1, doctor: doc1, datetime_start: DateTime.new(2020, 03, 30, 8, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 9, 00, 0), status: "confirmed")
 
-cons2 = Consultation.create!(user: user2, doctor: doc2, datetime_start: DateTime.new(2020, 03, 30, 16, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 17, 00, 0))
+cons2 = Consultation.create!(user: user2, doctor: doc2, datetime_start: DateTime.new(2020, 03, 30, 16, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 17, 00, 0), status: "pending")
 
-cons3 = Consultation.create!(user: user1, doctor: doc2, datetime_start: DateTime.new(2020, 03, 30, 18, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 19, 00, 0))
+cons3 = Consultation.create!(user: user1, doctor: doc2, datetime_start: DateTime.new(2020, 03, 30, 18, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 19, 00, 0), status: "confirmed")
 
-cons4 = Consultation.create!(user: user2, doctor: doc1, datetime_start: DateTime.new(2020, 03, 30, 10, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 11, 00, 0))
+cons4 = Consultation.create!(user: user2, doctor: doc1, datetime_start: DateTime.new(2020, 03, 30, 10, 00, 0), datetime_end: DateTime.new(2020, 03, 30, 11, 00, 0), status: "declined")
 
 
 p "Finished!"

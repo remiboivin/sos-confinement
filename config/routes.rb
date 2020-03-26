@@ -50,31 +50,31 @@ Rails.application.routes.draw do
       passwords: 'doctors/passwords',
       registrations:'doctors/registrations',
       unlocks: 'doctors/unlocks',
-    },
-           :skip => [:registrations, :sessions]
+    }, :skip => [:registrations, :sessions]
+
     devise_scope :doctor do
-      get '/s-inscrire', to: "doctor/registrations#new", as: :new_doctor_registration
-      post '/s-inscrire', to: "doctor/registrations#create", as: :doctor_registration
-      get '/se-connecter', to: "doctor/sessions#new", as: :new_doctor_session
-      post '/se-connecter', to: "doctor/sessions#create", as: :doctor_session
-      get '/se-deconnecter', to: 'doctor/sessions#destroy', as: :doctor_destroy_session
+      get '/docteur/s-inscrire', to: "doctor/registrations#new", as: :new_doctor_registration
+      post '/docteur/s-inscrire', to: "doctor/registrations#create", as: :doctor_registration
+      get '/docteur/se-connecter', to: "doctor/sessions#new", as: :new_doctor_session
+      post '/docteur/se-connecter', to: "doctor/sessions#create", as: :doctor_session
+      get '/docteur/se-deconnecter', to: 'doctor/sessions#destroy', as: :doctor_destroy_session
     end
 
-  devise_for :users, path: 'users',
+  devise_for :user, path: 'users',
     controllers: {
       sessions: 'users/sessions',
       confirmations: 'users/confirmations',
       passwords: 'users/passwords',
       registrations:'users/registrations',
       unlocks: 'users/unlocks',
-    },
-         :skip => [:registrations, :sessions]
-  devise_scope :user do
-    get '/s-inscrire', to: "user/registrations#new", as: :new_user_registration
-    post '/s-inscrire', to: "user/registrations#create", as: :user_registration
-    get '/se-connecter', to: "user/sessions#new", as: :new_user_session
-    post '/se-connecter', to: "user/sessions#create", as: :user_session
-    get '/se-deconnecter', to: 'user/sessions#destroy', as: :user_destroy_session
+    }, :skip => [:registrations, :sessions]
+
+  devise_scope :users do
+    get '/utilisateur/s-inscrire', to: "user/registrations#new", as: :new_user_registration
+    post '/utilisateur/s-inscrire', to: "user/registrations#create", as: :user_registration
+    get '/utilisateur/se-connecter', to: "user/sessions#new", as: :new_user_session
+    post '/utilisateur/se-connecter', to: "user/sessions#create", as: :user_session
+    get '/utilisateur/se-deconnecter', to: 'user/sessions#destroy', as: :user_destroy_session
   end
 
   root to: 'home#index'
@@ -85,12 +85,9 @@ Rails.application.routes.draw do
   get '/nous-soutenir',   to: 'home#support'
   get '/nous-contacter',  to: 'home#contact'
 
+  resources :consultations
+
+  resources :availabilities, except: [:show]
+
   match '*path' => 'errors#error_404', via: :all
-
-  resources :users, only: [:index, :show, :create]
-
-  resources :doctors
-
-  resources :consultations [:index, :show, :new, :create, :destroy]
-
 end
