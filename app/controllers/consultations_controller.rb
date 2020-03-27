@@ -1,3 +1,5 @@
+require 'pry-byebug'
+
 class ConsultationsController < ApplicationController
   before_action :check_user
 
@@ -25,6 +27,9 @@ class ConsultationsController < ApplicationController
   def new
     if @user.class == User
       @consultation = Consultation.new
+      if params[:search].present?
+        @available_doctors = Availability.where('datetime_start >= ?', params[:search])
+      end
     else
       redirect_to consultations_path
     end

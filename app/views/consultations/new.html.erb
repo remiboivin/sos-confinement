@@ -1,8 +1,19 @@
 <h1>This is Consultations#new</h1>
 
-
-<%= simple_form_for @consultation do |f| %>
-  <%= f.input :datetime_start %>
-  <%= f.input :datetime_end %>
-  <%= f.button :submit %>
+<%= simple_form_for :search, url: new_consultation_path, method: :get do |f| %>
+  <%= f.input :date, as: :datetime, html5: true %>
+  <%= f.submit "Search" %>
 <% end %>
+
+<% if @available_doctors.nil? || @available_doctors.empty?%>
+  <p>No doctor available at this moment</p>
+<% else %>
+  <% @available_doctors.each do |availability| %>
+    <p><%= availability.doctor %></p>
+  <% end %>
+<% end %>
+
+
+
+
+

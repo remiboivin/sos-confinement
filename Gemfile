@@ -82,3 +82,4 @@ gem 'sprockets-rails'
 gem 'will_paginate', '~> 3.3.0'
 gem "font-awesome-rails"
 gem 'rolify'
+gem 'pry-byebug'
