@@ -1,5 +1,26 @@
 <h1>This is Consultations#index</h1>
 
+<h2>Consultations to confirm</h2>
+
+<% if @pending_consultations.empty? %>
+  <p>No consultation pending</p>
+<% else %>
+  <ul>
+    <% @pending_consultations.each do |consultation| %>
+      <%= link_to(consultation) do %>
+        <% if @user.class == Doctor %>
+          <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
+        <% else %>
+          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <% end %>
+        <p><%= consultation.datetime_start %></p>
+        <p><%= consultation.datetime_end %></p>
+        <p><%= consultation.status %></p>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
 <h2>Next consultations</h2>
 
 <% if @upcoming_consultations.empty? %>
@@ -8,9 +29,14 @@
   <ul>
     <% @upcoming_consultations.each do |consultation| %>
       <%= link_to(consultation) do %>
-        <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <% if @user.class == Doctor %>
+          <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
+        <% else %>
+          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <% end %>
         <p><%= consultation.datetime_start %></p>
         <p><%= consultation.datetime_end %></p>
+        <p><%= consultation.status %></p>
       <% end %>
     <% end %>
   </ul>
@@ -27,6 +53,49 @@
         <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
         <p><%= consultation.datetime_start %></p>
         <p><%= consultation.datetime_end %></p>
+        <p><%= consultation.status %></p>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>Declined consultations</h2>
+
+<% if @declined_consultations.empty? %>
+  <p>No consultation declined yet</p>
+<% else %>
+  <ul>
+    <% @declined_consultations.each do |consultation| %>
+      <%= link_to(consultation) do %>
+        <% if @user.class == Doctor %>
+          <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
+        <% else %>
+          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <% end %>
+        <p><%= consultation.datetime_start %></p>
+        <p><%= consultation.datetime_end %></p>
+        <p><%= consultation.status %></p>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>Cancelled consultations</h2>
+
+<% if @cancelled_consultations.empty? %>
+  <p>No consultation cancelled yet</p>
+<% else %>
+  <ul>
+    <% @cancelled_consultations.each do |consultation| %>
+      <%= link_to(consultation) do %>
+        <% if @user.class == Doctor %>
+          <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
+        <% else %>
+          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+        <% end %>
+        <p><%= consultation.datetime_start %></p>
+        <p><%= consultation.datetime_end %></p>
+        <p><%= consultation.status %></p>
       <% end %>
     <% end %>
   </ul>

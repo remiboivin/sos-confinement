@@ -83,7 +83,11 @@ Rails.application.routes.draw do
   get '/nous-soutenir',   to: 'home#support'
   get '/nous-contacter',  to: 'home#contact'
 
-  resources :consultations
+  resources :consultations do
+    patch 'cancel', to: 'consultations#cancel'
+    patch 'confirm', to: 'consultations#confirm'
+    patch 'decline', to: 'consultations#decline'
+  end
 
   resources :availabilities, except: [:show]
 

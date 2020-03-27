@@ -8,6 +8,9 @@ class ConsultationsController < ApplicationController
   def index
     set_upcoming_consultations
     set_past_consultations
+    set_declined_consultations
+    set_pending_consultations
+    set_cancelled_consultations
   end
 
   def show
@@ -20,7 +23,11 @@ class ConsultationsController < ApplicationController
   end
 
   def new
-    @consultation = Consultation.new
+    if @user.class == User
+      @consultation = Consultation.new
+    else
+      redirect_to consultations_path
+    end
   end
 
   def create
@@ -69,10 +76,73 @@ class ConsultationsController < ApplicationController
     end
   end
 
+  def decline
+    @consultation = Consultation.find(params[:consultation_id])
+
+    if @consultations.include?(@consultation) && @user.class == Doctor
+      @consultation.status = "declined"
+      if @consultation.save
+        redirect_to consultations_path
+      else
+        redirect_to consultation_path(@consultation)
+        flash[:notice] = "Something went wrong! Consultation not saved!"
+      end
+    else
+      redirect_to consultations_path
+      flash[:notice] = "You are not allowed to decline this consultation"
+    end
+  end
+
+  def cancel
+    @consultation = Consultation.find(params[:consultation_id])
+
+    if @consultations.include?(@consultation)
+      @consultation.status = "cancelled"
+      if @consultation.save
+        redirect_to consultations_path
+      else
+        redirect_to consultation_path(@consultation)
+        flash[:notice] = "Something went wrong! Consultation not saved!"
+      end
+    else
+      redirect_to consultations_path
+      flash[:notice] = "You are not allowed to cancel this consultation"
+    end
+  end
+
+  def confirm
+    @consultation = Consultation.find(params[:consultation_id])
+
+    if @consultations.include?(@consultation) && @user.class == Doctor
+      @consultation.status = "confirmed"
+      if @consultation.save
+        redirect_to consultations_path
+      else
+        redirect_to consultation_path(@consultation)
+        flash[:notice] = "Something went wrong! Consultation not saved!"
+      end
+    else
+      redirect_to consultations_path
+      flash[:notice] = "You are not allowed to confirm this consultation"
+    end
+  end
+
   private
 
+  def set_cancelled_consultations
+    @cancelled_consultations = @consultations.select {|consultation| consultation.status == "cancelled" }
+  end
+
+  def set_declined_consultations
+    @declined_consultations = @consultations.select {|consultation| consultation.status == "declined" }
+  end
+
+  def set_pending_consultations
+    @pending_consultations = @consultations.select {|consultation| consultation.status == "pending" }
+  end
+
   def set_upcoming_consultations
-    @upcoming_consultations = @consultations.select {|consultation| consultation.datetime_start && consultation.datetime_end > DateTime.now }
+    @upcoming_consultations = @consultations.select {|consultation| (consultation.status == "confirmed") && (consultation.datetime_start && consultation.datetime_end > DateTime.now) }
   end
 
   def set_past_consultations

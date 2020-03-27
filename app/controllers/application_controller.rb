@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def devise_parameter_sanitizer
     if resource_class == User
       User::ParameterSanitizer.new(User, :user, params)
-    elsif resource_class == devise
+    elsif resource_class == Doctor
       Doctor::ParameterSanitizer.new(Doctor, :doctor, params)
     else
       super # Use the default one
