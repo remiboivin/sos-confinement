@@ -13,8 +13,9 @@ class AvailabilitiesController < ApplicationController
 
   def create
     @availability = Availability.new(availability_params)
+    @availability.doctor = current_doctor
 
-    if @availability.save
+    if @availability.save!
       redirect_to availabilities_path
     else
       render :new
@@ -25,7 +26,7 @@ class AvailabilitiesController < ApplicationController
   end
 
   def update
-    if @availability.update
+    if @availability.update(availability_params)
       redirect_to availabilities_path
     else
       render :edit

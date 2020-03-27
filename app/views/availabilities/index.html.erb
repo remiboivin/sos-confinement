@@ -1,1 +1,9 @@
 <h1>This Availabilities#index</h1>
+
+<ul>
+  <% @availabilities.each do |availability| %>
+    <%= link_to(edit_availability_path(availability)) do  %>
+      <li><%= availability.datetime_start %> - <%= availability.datetime_end %></li>
+    <% end %>
+  <% end %>
+</ul>

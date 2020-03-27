@@ -1,1 +1,7 @@
 <h1>This Availabilities#edit</h1>
+
+<%= simple_form_for @availability do |f| %>
+  <%= f.input :datetime_start %>
+  <%= f.input :datetime_end %>
+  <%= f.button :submit %>
+<% end %>
