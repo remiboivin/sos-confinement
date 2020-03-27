@@ -28,7 +28,9 @@ class ConsultationsController < ApplicationController
     if @user.class == User
       @consultation = Consultation.new
       if params[:search].present?
-        @available_doctors = Availability.where('datetime_start >= ?', params[:search])
+        id = params[:search].values()
+        binding.pry
+        @available_doctors = Availability.where('id = ? ', id)
       end
     else
       redirect_to consultations_path
