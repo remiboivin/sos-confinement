@@ -15,7 +15,7 @@ class AvailabilitiesController < ApplicationController
     @availability = Availability.new(availability_params)
     @availability.doctor = current_doctor
 
-    if @availability.save!
+    if @availability.save
       redirect_to availabilities_path
     else
       render :new

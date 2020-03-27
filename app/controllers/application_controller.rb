@@ -1,6 +1,6 @@
 require "application_responder"
-require_relative 'users/user_parameter_sanitizer'
-require_relative 'doctors/doctor_parameter_sanitizer'
+require 'users/user_parameter_sanitizer.rb'
+require 'doctors/doctor_parameter_sanitizer.rb'
 
 include ActionController::MimeResponds
 
