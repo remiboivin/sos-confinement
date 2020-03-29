@@ -3,7 +3,7 @@ class CreateAvailabilities < ActiveRecord::Migration[6.0]
     create_table :availabilities do |t|
       t.references :doctor, foreign_key: true
 
-      t.string :status, null: false, default: ""
+      t.string :status, null: false, default: "free"
       t.integer :date_start_year, null: false, default: 0
       t.integer :date_start_month, null: false, default: 0
       t.integer :date_start_day, null: false, default: 0

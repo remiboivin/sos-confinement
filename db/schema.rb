@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_204825) do
 
   create_table "availabilities", force: :cascade do |t|
     t.bigint "doctor_id"
-    t.string "status", default: "", null: false
+    t.string "status", default: "free", null: false
     t.integer "date_start_year", default: 0, null: false
     t.integer "date_start_month", default: 0, null: false
     t.integer "date_start_day", default: 0, null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_204825) do
   create_table "consultations", force: :cascade do |t|
     t.bigint "availability_id"
     t.bigint "user_id"
-    t.string "status", default: "", null: false
+    t.string "status", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["availability_id"], name: "index_consultations_on_availability_id"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_204825) do
     t.string "specialty", default: "", null: false
     t.string "adeli_number", default: "", null: false
     t.string "phone_number", default: "", null: false
-    t.string "status", default: "", null: false
+    t.string "status", default: "pending", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_doctors_on_email", unique: true

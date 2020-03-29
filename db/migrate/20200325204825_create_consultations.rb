@@ -3,7 +3,7 @@ class CreateConsultations < ActiveRecord::Migration[6.0]
     create_table :consultations do |t|
       t.references :availability, foreign_key: true
       t.references :user, foreign_key: true
-      t.string :status, null: false, default: ""
+      t.string :status, null: false, default: "pending"
 
       t.timestamps
     end
