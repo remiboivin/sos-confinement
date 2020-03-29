@@ -86,7 +86,6 @@ Rails.application.routes.draw do
   resources :consultations do
     patch 'cancel', to: 'consultations#cancel'
     patch 'confirm', to: 'consultations#confirm'
-    patch 'decline', to: 'consultations#decline'
   end
 
   resources :availabilities, except: [:show]

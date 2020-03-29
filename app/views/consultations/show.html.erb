@@ -3,22 +3,21 @@
 <% if @user.class == Doctor %>
     <h2>Consultation with <%= @consultation.user.first_name %> <%= @consultation.user.last_name %></h2>
 <% else %>
-  <h2>Consultation with <%= @consultation.doctor.first_name %> <%= @consultation.doctor.last_name %></h2>
-<h3><%= @consultation.doctor.specialty%></h3>
+  <h2>Consultation with <%= @availability.doctor.first_name %> <%= @availability.doctor.last_name %></h2>
+  <h3><%= @availability.doctor.specialty%></h3>
 <% end %>
 
 <p>Status: <%= @consultation.status %></p>
-<p><%= @consultation.datetime_start %></p>
-<p><%= @consultation.datetime_end %></p>
+<p><%= @datetime_start %></p>
+<p><%= @datetime_end %></p>
 
 <% if @user.class == Doctor %>
   <% if @consultation.status == "pending" %>
     <%= link_to "Confirm Consultation", consultation_confirm_path(@consultation), method: :patch %>
-    <%= link_to "Decline Consultation", consultation_decline_path(@consultation), method: :patch %>
   <% end %>
 <% end %>
 
-<% unless @consultation.status == "declined" || @consultation.status == "cancelled" %>
+<% unless @consultation.status == "cancelled" %>
   <%= link_to "Cancel Consultation", consultation_cancel_path(@consultation), method: :patch, data: { confirm: "Are you sure?" } %>
 
   <%= link_to "Edit Consultation", edit_consultation_path(@consultation) %>

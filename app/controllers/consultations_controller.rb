@@ -6,18 +6,20 @@ class ConsultationsController < ApplicationController
   before_action :set_consultations, except: [:new, :create]
   before_action :set_consultation, only: [:show, :edit, :update, :destroy]
 
-
   def index
     set_upcoming_consultations
     set_past_consultations
-    set_declined_consultations
     set_pending_consultations
     set_cancelled_consultations
+    binding.pry
   end
 
   def show
     if @consultations.include?(@consultation)
       @consultation
+      @datetime_start
+      @datetime_end
+      @availability
     else
       redirect_to consultations_path
       flash[:notice] = "You are not allowed to access this consultation"
@@ -83,23 +85,6 @@ class ConsultationsController < ApplicationController
     end
   end
 
-  def decline
-    @consultation = Consultation.find(params[:consultation_id])
-
-    if @consultations.include?(@consultation) && @user.class == Doctor
-      @consultation.status = "declined"
-      if @consultation.save
-        redirect_to consultations_path
-      else
-        redirect_to consultation_path(@consultation)
-        flash[:notice] = "Something went wrong! Consultation not saved!"
-      end
-    else
-      redirect_to consultations_path
-      flash[:notice] = "You are not allowed to decline this consultation"
-    end
-  end
-
   def cancel
     @consultation = Consultation.find(params[:consultation_id])
 
@@ -134,26 +119,40 @@ class ConsultationsController < ApplicationController
     end
   end
 
+
   private
 
-  def set_cancelled_consultations
-    @cancelled_consultations = @consultations.select {|consultation| consultation.status == "cancelled" }
-  end
+  def compute_dates(consultation)
+    @availability = consultation.availability
+    @datetime_start = DateTime.new(@availability.date_start_year, @availability.date_start_month, @availability.date_start_day, @availability.time_start_hour, @availability.time_start_minutes)
 
-  def set_declined_consultations
-    @declined_consultations = @consultations.select {|consultation| consultation.status == "declined" }
-  end
-
-  def set_pending_consultations
-    @pending_consultations = @consultations.select {|consultation| consultation.status == "pending" }
+    @datetime_end = DateTime.new(@availability.date_end_year, @availability.date_end_month, @availability.date_end_day, @availability.time_end_hour, @availability.time_end_minutes)
   end
 
   def set_upcoming_consultations
-    @upcoming_consultations = @consultations.select {|consultation| (consultation.status == "confirmed") && (consultation.datetime_start && consultation.datetime_end > DateTime.now) }
+    @upcoming_consultations = @consultations.select do |consultation|
+      compute_dates(consultation)
+      true if (consultation.status == "confirmed") && ((@datetime_start && @datetime_end) > DateTime.now)
+    end
   end
 
   def set_past_consultations
-    @past_consultations = @consultations.select {|consultation| consultation.datetime_start && consultation.datetime_end < DateTime.now }
+    @past_consultations = @consultations.select do |consultation|
+      compute_dates(consultation)
+      true if (consultation.status == "confirmed") && ((@datetime_start && @datetime_end) < DateTime.now)
+    end
+  end
+
+  def set_cancelled_consultations
+    @cancelled_consultations = @consultations.select do |consultation|
+      true if consultation.status == "cancelled"
+    end
+  end
+
+  def set_pending_consultations
+    @pending_consultations = @consultations.select do |consultation|
+      true if consultation.status == "pending"
+    end
   end
 
   def set_consultations
@@ -162,6 +161,7 @@ class ConsultationsController < ApplicationController
 
   def set_consultation
     @consultation = Consultation.find(params[:id])
+    compute_dates(@consultation)
   end
 
   def params_consultation

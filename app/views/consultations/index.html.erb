@@ -8,10 +8,32 @@
   <% else %>
     <ul>
       <% @pending_consultations.each do |consultation| %>
+        <%  datetime_start = DateTime.new(consultation.availability.date_start_year, consultation.availability.date_start_month, consultation.availability.date_start_day, consultation.availability.time_start_hour, consultation.availability.time_start_minutes) %>
+        <% datetime_end = DateTime.new(consultation.availability.date_end_year, consultation.availability.date_end_month, consultation.availability.date_end_day, consultation.availability.time_end_hour, consultation.availability.time_end_minutes) %>
         <%= link_to(consultation) do %>
           <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
-          <p><%= consultation.datetime_start %></p>
-          <p><%= consultation.datetime_end %></p>
+          <p><%= datetime_start.strftime(" %A, %B %d, %Y, %H, %M") %></p>
+          <p><%= datetime_end.strftime(" %A, %B %d, %Y, %H:%M") %></p>
+          <p><%= consultation.status %></p>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+
+<% else %>
+  <h2>Consultations still pending</h2>
+
+  <% if @pending_consultations.empty? %>
+    <p>No consultation pending</p>
+  <% else %>
+    <ul>
+      <% @pending_consultations.each do |consultation| %>
+        <%  datetime_start = DateTime.new(consultation.availability.date_start_year, consultation.availability.date_start_month, consultation.availability.date_start_day, consultation.availability.time_start_hour, consultation.availability.time_start_minutes) %>
+        <% datetime_end = DateTime.new(consultation.availability.date_end_year, consultation.availability.date_end_month, consultation.availability.date_end_day, consultation.availability.time_end_hour, consultation.availability.time_end_minutes) %>
+        <%= link_to(consultation) do %>
+          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+          <p><%= datetime_start.strftime(" %A, %B %d, %Y, %H, %M") %></p>
+          <p><%= datetime_end.strftime(" %A, %B %d, %Y, %H:%M") %></p>
           <p><%= consultation.status %></p>
         <% end %>
       <% end %>
@@ -26,14 +48,16 @@
 <% else %>
   <ul>
     <% @upcoming_consultations.each do |consultation| %>
+      <%  datetime_start = DateTime.new(consultation.availability.date_start_year, consultation.availability.date_start_month, consultation.availability.date_start_day, consultation.availability.time_start_hour, consultation.availability.time_start_minutes) %>
+      <% datetime_end = DateTime.new(consultation.availability.date_end_year, consultation.availability.date_end_month, consultation.availability.date_end_day, consultation.availability.time_end_hour, consultation.availability.time_end_minutes) %>
       <%= link_to(consultation) do %>
         <% if @user.class == Doctor %>
           <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
         <% else %>
-          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+          <li><%=consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
         <% end %>
-        <p><%= consultation.datetime_start %></p>
-        <p><%= consultation.datetime_end %></p>
+        <p><%= datetime_start.strftime(" %A, %B %d, %Y, %H, %M") %></p>
+        <p><%= datetime_end.strftime(" %A, %B %d, %Y, %H:%M") %></p>
         <p><%= consultation.status %></p>
       <% end %>
     <% end %>
@@ -47,31 +71,16 @@
 <% else %>
   <ul>
     <% @past_consultations.each do |consultation| %>
-      <%= link_to(consultation) do %>
-        <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
-        <p><%= consultation.datetime_start %></p>
-        <p><%= consultation.datetime_end %></p>
-        <p><%= consultation.status %></p>
-      <% end %>
-    <% end %>
-  </ul>
-<% end %>
-
-<h2>Declined consultations</h2>
-
-<% if @declined_consultations.empty? %>
-  <p>No consultation declined yet</p>
-<% else %>
-  <ul>
-    <% @declined_consultations.each do |consultation| %>
-      <%= link_to(consultation) do %>
+      <%  datetime_start = DateTime.new(consultation.availability.date_start_year, consultation.availability.date_start_month, consultation.availability.date_start_day, consultation.availability.time_start_hour, consultation.availability.time_start_minutes) %>
+      <% datetime_end = DateTime.new(consultation.availability.date_end_year, consultation.availability.date_end_month, consultation.availability.date_end_day, consultation.availability.time_end_hour, consultation.availability.time_end_minutes) %>
+        <%= link_to(consultation) do %>
         <% if @user.class == Doctor %>
           <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
         <% else %>
           <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
         <% end %>
-        <p><%= consultation.datetime_start %></p>
-        <p><%= consultation.datetime_end %></p>
+        <p><%= datetime_start.strftime(" %A, %B %d, %Y, %H, %M") %></p>
+        <p><%= datetime_end.strftime(" %A, %B %d, %Y, %H:%M") %></p>
         <p><%= consultation.status %></p>
       <% end %>
     <% end %>
@@ -85,14 +94,17 @@
 <% else %>
   <ul>
     <% @cancelled_consultations.each do |consultation| %>
+      <%  datetime_start = DateTime.new(consultation.availability.date_start_year, consultation.availability.date_start_month, consultation.availability.date_start_day, consultation.availability.time_start_hour, consultation.availability.time_start_minutes) %>
+      <% datetime_end = DateTime.new(consultation.availability.date_end_year, consultation.availability.date_end_month, consultation.availability.date_end_day, consultation.availability.time_end_hour, consultation.availability.time_end_minutes) %>
       <%= link_to(consultation) do %>
+
         <% if @user.class == Doctor %>
           <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
         <% else %>
           <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
         <% end %>
-        <p><%= consultation.datetime_start %></p>
-        <p><%= consultation.datetime_end %></p>
+        <p><%= datetime_start.strftime(" %A, %B %d, %Y, %H, %M") %></p>
+        <p><%= datetime_end.strftime(" %A, %B %d, %Y, %H:%M") %></p>
         <p><%= consultation.status %></p>
       <% end %>
     <% end %>

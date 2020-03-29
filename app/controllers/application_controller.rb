@@ -22,8 +22,6 @@ class ApplicationController < ActionController::Base
       User::ParameterSanitizer.new(User, :user, params)
     elsif resource_class == Doctor
       Doctor::ParameterSanitizer.new(Doctor, :doctor, params)
-    else
-      super # Use the default one
     end
   end
 end
