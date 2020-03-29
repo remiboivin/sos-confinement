@@ -1,24 +1,22 @@
 <h1>This is Consultations#index</h1>
 
-<h2>Consultations to confirm</h2>
+<% if @user.class == Doctor %>
+  <h2>Consultations to confirm</h2>
 
-<% if @pending_consultations.empty? %>
-  <p>No consultation pending</p>
-<% else %>
-  <ul>
-    <% @pending_consultations.each do |consultation| %>
-      <%= link_to(consultation) do %>
-        <% if @user.class == Doctor %>
+  <% if @pending_consultations.empty? %>
+    <p>No consultation pending</p>
+  <% else %>
+    <ul>
+      <% @pending_consultations.each do |consultation| %>
+        <%= link_to(consultation) do %>
           <li><%= consultation.user.first_name %> <%= consultation.user.last_name %></li>
-        <% else %>
-          <li><%= consultation.doctor.first_name %> <%= consultation.doctor.last_name %></li>
+          <p><%= consultation.datetime_start %></p>
+          <p><%= consultation.datetime_end %></p>
+          <p><%= consultation.status %></p>
         <% end %>
-        <p><%= consultation.datetime_start %></p>
-        <p><%= consultation.datetime_end %></p>
-        <p><%= consultation.status %></p>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
+  <% end %>
 <% end %>
 
 <h2>Next consultations</h2>

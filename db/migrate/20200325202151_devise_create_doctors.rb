@@ -34,7 +34,10 @@ class DeviseCreateDoctors < ActiveRecord::Migration[6.0]
 
       t.string :first_name, null: false, default: ""
       t.string :last_name, null: false, default: ""
-
+      t.string :specialty, null: false, default: ""
+      t.string :adeli_number, null: false, default: ""
+      t.string :phone_number, null: false, default: ""
+      t.string :status, null: false, default: ""
 
       t.timestamps null: false
     end
