@@ -1,6 +1,6 @@
 class Consultation < ApplicationRecord
+  belongs_to :availability
   belongs_to :user
-  belongs_to :doctor
 
-  validates_with ConsultationValidator
+  validates :status, presence: true
 end

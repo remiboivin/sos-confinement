@@ -1,13 +1,22 @@
 class AvailabilityValidator < ActiveModel::Validator
   def validate(record)
-    if record.datetime_start.nil?
-      record.errors[:datetime_start] << "Please enter a start time"
+    datetime_start = DateTime.new(record.date_start_year, record.date_start_month, record.date_start_day, record_time_start_hour, record.time_start_minutes)
+    datetime_end = DateTime.new(record.date_end_year, record.date_end_month, record.date_end_day, record_time_end_hour, record.time_end_minutes)
+
+    if datetime_start.nil?
+      record.errors << "Please enter a start time"
       false
-    elsif record.datetime_end.nil?
-      record.errors[:datetime_end] << "Please enter an end time"
+    elsif datetime_end.nil?
+      record.errors << "Please enter an end time"
       false
-    elsif record.datetime_start >= record.datetime_end
-      record.errors[:datetime_end] << "End time should be after start time"
+    elsif datetime_start < DateTime.now
+      record.errors << "Start Date can't be in the past"
+      false
+    elsif datetime_end < DateTime.now
+      record.errors << "End Date can't be in the past"
+      false
+    elsif datetime_start >= datetime_end
+      record.errors << "End should be after start"
       false
     end
   end
