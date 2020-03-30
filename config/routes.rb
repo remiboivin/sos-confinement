@@ -55,8 +55,8 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get '/admin',           to: 'admin#index'
-  get '/profil',          to: 'dashboard#index'
+  # get '/admin',           to: 'admin#index'
+  # get '/profil',          to: 'dashboard#index'
   get '/historique',      to: 'home#about'
   get '/nous-soutenir',   to: 'home#support'
   get '/nous-contacter',  to: 'home#contact'
