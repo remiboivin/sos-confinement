@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   # get '/admin',           to: 'admin#index'
   # get '/profil',          to: 'dashboard#index'
-  get '/about',      to: 'home#about'
+  get '/qui_sommes_nous', to: 'home#about'
   get '/nous_soutenir',   to: 'home#support'
   get '/nous_contacter',  to: 'home#contact'
 
@@ -67,6 +67,7 @@ Rails.application.routes.draw do
   post '/create_alert',     to: 'alert#create'
   get '/edit_alert',        to: 'alert#edit'
   get '/delete_alert',      to: 'alert#delete'
+  get '/gestion_attente',   to: 'alert#attente'
 
   get '/create_patients',   to: 'patients#index'
   post '/create_patients',  to: 'patients#create'
