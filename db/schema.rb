@@ -10,10 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_112729) do
+ActiveRecord::Schema.define(version: 2020_03_31_131455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alerts", force: :cascade do |t|
+    t.date "date_contact"
+    t.text "comment"
+    t.boolean "is_booked"
+    t.integer "score_consultation"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "doctors", force: :cascade do |t|
+    t.string "name"
+    t.string "first_name"
+    t.string "adeli", null: false
+    t.string "login"
+    t.string "password"
+    t.string "email", default: "", null: false
+    t.string "speciality"
+    t.boolean "is_valid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "patients", force: :cascade do |t|
+    t.string "name"
+    t.string "first_name"
+    t.string "email", default: "", null: false
+    t.string "phone", default: "", null: false
+    t.text "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "name"
@@ -29,6 +61,10 @@ ActiveRecord::Schema.define(version: 2020_03_22_112729) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "last_name"
+    t.string "first_name"
+    t.string "login"
+    t.boolean "is_admin", default: false, null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
