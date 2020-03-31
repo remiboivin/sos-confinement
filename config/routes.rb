@@ -63,7 +63,8 @@ Rails.application.routes.draw do
 
   resources :user, only: [:index, :show, :create]
 
-  get '/create',           to: 'alert#create'
+  get '/create',           to: 'alert#index'
+  post '/create',          to: 'alert#create'
   get '/edit',             to: 'alert#edit'
   get '/delete',           to: 'alert#delete'
 
