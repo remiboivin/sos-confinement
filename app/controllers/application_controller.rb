@@ -1,12 +1,23 @@
 require "application_responder"
-include ActionController::MimeResponds
+
 class ApplicationController < ActionController::Base
-  self.responder = ApplicationResponder
-  respond_to :html
-  rescue_from CanCan::AccessDenied do |exception|
-      respond_to do |format|
-        format.json { head :forbidden }
-        format.html { redirect_to main_app.root_url, :alert => exception.message }
-      end
-    end
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  rescue
+    render_404
+  end
+
+  def render_404
+    render file: "errors/error_404", status: :not_found
+  end
+
+  def internal_server_error
+    raise ActionController::RoutingError.new('Internal Server Error')
+  rescue
+    render_internal_server_error
+  end
+
+  def render_internal_server_error
+    render file: "errors/error_500", status: :internal_server_error
+  end
 end
