@@ -77,8 +77,7 @@ Rails.application.routes.draw do
   post '/create_doctors',   to: 'doctors#create'
   get 'delete_doctors',     to: 'doctors#delete'
 
-match '*path' => 'errors#error_500', via: :all
-
-match '/404', to: 'errors#not_found', via: :all
+  match '*path' => 'errors#error_500', via: :all
+  match '/404', to: 'errors#not_found', via: :all
 
 end
