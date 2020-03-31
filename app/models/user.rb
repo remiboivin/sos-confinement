@@ -18,14 +18,4 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable
 
-  def has_role?(role_sym)
-    roles.any? { |r| r.name.underscore.to_sym == role_sym }
-  end
-
-  def add_role(role)
-    roles << Role.find_by(name: role)
-  end
-  def remove_role(role)
-    roles.delete(Role.find_by(name: role))
-  end
 end
