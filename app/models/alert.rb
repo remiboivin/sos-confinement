@@ -1,4 +1,4 @@
 class Alert < ApplicationRecord
-    # belong_to: patient
-    # belong_to: doctor
+     belong_to :patient
+     belong_to :doctor
 end

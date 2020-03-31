@@ -63,9 +63,8 @@ Rails.application.routes.draw do
 
   resources :user, only: [:index, :show, :create]
 
-  get '/create',           to: 'alert#create'
-  get '/edit',             to: 'alert#edit'
-  get '/delete',           to: 'alert#delete'
+  resources :alerts, only: [:new, :create, :edit, :update, :delete]
+
 
 match '*path' => 'errors#error_404', via: :all
 end

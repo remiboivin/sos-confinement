@@ -1,3 +1,4 @@
 class Doctor < ApplicationRecord
-  # belong_to: user
+  has_many :alerts
+  has_many :patients, :through => :alert
 end
