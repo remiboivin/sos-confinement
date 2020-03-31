@@ -77,7 +77,11 @@ Rails.application.routes.draw do
   post '/create_doctors',   to: 'doctors#create'
   get 'delete_doctors',     to: 'doctors#delete'
 
+<<<<<<< HEAD
 match '/500' => 'errors#error_500', via: :all
+=======
+
+>>>>>>> 82684b01f45bb931c3c6647d681a794cf83be52b
 match '*path' => 'errors#error_404', via: :all
 
 end
