@@ -63,10 +63,18 @@ Rails.application.routes.draw do
 
   resources :user, only: [:index, :show, :create]
 
-  get '/create',           to: 'alert#index'
-  post '/create',          to: 'alert#create'
-  get '/edit',             to: 'alert#edit'
-  get '/delete',           to: 'alert#delete'
+  get '/create_alert',      to: 'alert#index'
+  post '/create_alert',     to: 'alert#create'
+  get '/edit_alert',        to: 'alert#edit'
+  get '/delete_alert',      to: 'alert#delete'
+
+  get '/create_patients',   to: 'patients#index'
+  post '/create_patients',  to: 'patients#create'
+  get 'delete_patients',    to: 'patients#delete'
+
+  get '/create_doctors',    to: 'doctors#index'
+  post '/create_doctors',   to: 'doctors#create'
+  get 'delete_doctors',     to: 'doctors#delete'
 
 match '*path' => 'errors#error_404', via: :all
 end
