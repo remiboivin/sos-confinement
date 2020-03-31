@@ -57,9 +57,9 @@ Rails.application.routes.draw do
 
   # get '/admin',           to: 'admin#index'
   # get '/profil',          to: 'dashboard#index'
-  get '/historique',      to: 'home#about'
-  get '/nous-soutenir',   to: 'home#support'
-  get '/nous-contacter',  to: 'home#contact'
+  get '/about',      to: 'home#about'
+  get '/nous_soutenir',   to: 'home#support'
+  get '/nous_contacter',  to: 'home#contact'
 
   resources :user, only: [:index, :show, :create]
 
