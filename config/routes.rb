@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   post '/create_doctors',   to: 'doctors#create'
   get 'delete_doctors',     to: 'doctors#delete'
 
+  match "*route_not_found", to: "application#not_found", via: :all
+  match "*internal_server_error", to: "application#internal_server_error", via: :all
 
-match '*path' => 'errors#error_404', via: :all
 end
