@@ -50,7 +50,7 @@ Yarn  | 1.22.4
 `$ npm install marked`
 
 
-###Images
+### Images
 
 Image:
 
@@ -98,7 +98,7 @@ cond(yes)->e
 cond(no)->op
 ```
 
-###Sequence Diagram
+### Sequence Diagram
                     
 #### Creating the alert appointement
 ```seq
@@ -115,4 +115,4 @@ Patient--> Doctor: return an evaluation
 Doctor-> Patient: Can return an behavioral's evaluation  
 ```
 
-###End
+### End

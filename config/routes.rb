@@ -57,13 +57,24 @@ Rails.application.routes.draw do
 
   # get '/admin',           to: 'admin#index'
   # get '/profil',          to: 'dashboard#index'
-  get '/historique',      to: 'home#about'
-  get '/nous-soutenir',   to: 'home#support'
-  get '/nous-contacter',  to: 'home#contact'
+  get '/about',      to: 'home#about'
+  get '/nous_soutenir',   to: 'home#support'
+  get '/nous_contacter',  to: 'home#contact'
 
   resources :user, only: [:index, :show, :create]
 
-  resources :alerts, only: [:new, :create, :edit, :update, :delete]
+  get '/create_alert',      to: 'alert#index'
+  post '/create_alert',     to: 'alert#create'
+  get '/edit_alert',        to: 'alert#edit'
+  get '/delete_alert',      to: 'alert#delete'
+
+  get '/create_patients',   to: 'patients#index'
+  post '/create_patients',  to: 'patients#create'
+  get 'delete_patients',    to: 'patients#delete'
+
+  get '/create_doctors',    to: 'doctors#index'
+  post '/create_doctors',   to: 'doctors#create'
+  get 'delete_doctors',     to: 'doctors#delete'
 
 
 match '*path' => 'errors#error_404', via: :all
