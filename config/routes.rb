@@ -61,8 +61,11 @@ Rails.application.routes.draw do
   get '/nous-soutenir',   to: 'home#support'
   get '/nous-contacter',  to: 'home#contact'
 
-  match '*path' => 'errors#error_404', via: :all
-
   resources :user, only: [:index, :show, :create]
 
+  get '/create',           to: 'alert#create'
+  get '/edit',             to: 'alert#edit'
+  get '/delete',           to: 'alert#delete'
+
+match '*path' => 'errors#error_404', via: :all
 end
