@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2020_03_31_131455) do
     t.integer "score_consultation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "patient_id"
+    t.integer "doctor_id"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -76,4 +78,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_131455) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "alerts", "doctors"
+  add_foreign_key "alerts", "patients"
 end
