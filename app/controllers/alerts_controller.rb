@@ -1,11 +1,11 @@
 class AlertsController < ApplicationController
-  
+
   def new
-    @alert = 
+    @alert = Alert.new
   end
 
   def index
-  
+
   end
 
   def create
@@ -13,7 +13,7 @@ class AlertsController < ApplicationController
   end
 
   def edit
-    
+
   end
 
   def delete
