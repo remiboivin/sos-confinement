@@ -43,18 +43,47 @@
 
 Rails.application.routes.draw do
 
-  devise_for :doctors
-  devise_for :users,
-         :skip => [:registrations, :sessions]
+  ## ROUTES FOR DOCTORS ##
+
+  devise_for :doctors, path: 'doctors',
+      controllers: {
+        sessions: 'doctors/sessions',
+        confirmations: 'doctors/confirmations',
+        passwords: 'doctors/passwords',
+        registrations:'doctors/registrations',
+        unlocks: 'doctors/unlocks',
+      }, :skip => [:registrations, :sessions]
+
+  devise_scope :doctor do
+    get '/docteur/s-inscrire', to: "doctors/registrations#new", as: :new_doctor_registration
+    post '/docteur/s-inscrire', to: "doctors/registrations#create", as: :doctor_registration
+    get '/docteur/se-connecter', to: "doctors/sessions#new", as: :new_doctor_session
+    post '/docteur/se-connecter', to: "doctors/sessions#create", as: :doctor_session
+    get '/docteur/se-deconnecter', to: 'doctors/sessions#destroy', as: :doctor_destroy_session
+  end
+
+      ## ROUTES FOR USERS ##
+
+  devise_for :users, path: 'users',
+      controllers: {
+        sessions: 'users/sessions',
+        confirmations: 'users/confirmations',
+        passwords: 'users/passwords',
+        registrations:'users/registrations',
+        unlocks: 'users/unlocks',
+      }, :skip => [:registrations, :sessions]
+
   devise_scope :user do
-    get '/s-inscrire', to: "user/registrations#new", as: :new_user_registration
-    post '/s-inscrire', to: "user/registrations#create", as: :user_registration
-    get '/se-connecter', to: "user/sessions#new", as: :new_user_session
-    post '/se-connecter', to: "user/sessions#create", as: :user_session
-    get '/se-deconnecter', to: 'user/sessions#destroy', as: :user_destroy_session
+    get '/utilisateur/s-inscrire', to: "users/registrations#new", as: :new_user_registration
+    post '/utilisateur/s-inscrire', to: "users/registrations#create", as: :user_registration
+    get '/utilisateur/se-connecter', to: "users/sessions#new", as: :new_user_session
+    post '/utilisateur/se-connecter', to: "users/sessions#create", as: :user_session
+    get '/utilisateur/se-deconnecter', to: 'users/sessions#destroy', as: :user_destroy_session
   end
 
   root to: 'home#index'
+
+  ## ROUTES FOR PAGES ##
 
   # get '/admin',           to: 'admin#index'
   # get '/profil',          to: 'dashboard#index'
@@ -62,21 +91,14 @@ Rails.application.routes.draw do
   get '/nous_soutenir',   to: 'home#support'
   get '/nous_contacter',  to: 'home#contact'
 
-  resources :user, only: [:index, :show, :create]
+  ## ROUTES FOR ALERTS ##
+  resources :alerts, only: [:new, :create, :edit, :update, :destroy] do
+    get '/gestion_attente',   to: 'alert#attente'
+  end
 
-  get '/create_alert',      to: 'alert#index'
-  post '/create_alert',     to: 'alert#create'
-  get '/edit_alert',        to: 'alert#edit'
-  get '/delete_alert',      to: 'alert#delete'
-  get '/gestion_attente',   to: 'alert#attente'
+  ## ROUTES FOR PATIENTS ##
 
-  get '/create_patients',   to: 'patients#index'
-  post '/create_patients',  to: 'patients#create'
-  get 'delete_patients',    to: 'patients#delete'
-
-  get '/create_doctors',    to: 'doctors#index'
-  post '/create_doctors',   to: 'doctors#create'
-  get 'delete_doctors',     to: 'doctors#delete'
+  resources :patients, only: [:index, :new, :create, :destroy]
 
   match "*route_not_found", to: "application#not_found", via: :all
   match "*internal_server_error", to: "application#internal_server_error", via: :all
