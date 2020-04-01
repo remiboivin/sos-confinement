@@ -1,5 +1,4 @@
 class AlertController < ApplicationController
-
   def index
   end
 
@@ -11,5 +10,4 @@ class AlertController < ApplicationController
 
   def delete
   end
-
 end
