@@ -5,6 +5,8 @@ class CreateAlerts < ActiveRecord::Migration[6.0]
       t.text :comment, null: true
       t.boolean :is_booked
       t.integer :score_consultation
+      t.references :patient, foreign_key: true
+      t.references :doctor, foreign_key: true
       t.timestamps
     end
   end

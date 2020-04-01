@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_131455) do
+ActiveRecord::Schema.define(version: 2020_04_01_093639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,23 +20,28 @@ ActiveRecord::Schema.define(version: 2020_03_31_131455) do
     t.text "comment"
     t.boolean "is_booked"
     t.integer "score_consultation"
+    t.bigint "patient_id"
+    t.bigint "doctor_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "patient_id"
-    t.integer "doctor_id"
+    t.index ["doctor_id"], name: "index_alerts_on_doctor_id"
+    t.index ["patient_id"], name: "index_alerts_on_patient_id"
   end
 
   create_table "doctors", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.string "name"
     t.string "first_name"
     t.string "adeli", null: false
     t.string "login"
-    t.string "password"
-    t.string "email", default: "", null: false
     t.string "speciality"
     t.boolean "is_valid"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_doctors_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_doctors_on_reset_password_token", unique: true
   end
 
   create_table "patients", force: :cascade do |t|
