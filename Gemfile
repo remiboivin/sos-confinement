@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby File.read('.ruby-version').strip
+ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
@@ -51,34 +51,4 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-group :development, :test do
-  gem 'annotate', '~> 3.1.0'
-  gem 'brakeman'
-  gem 'rspec-rails', '~> 4.0.0.rc1'
-  gem 'better_errors', '~> 2.6.0'
-  gem 'binding_of_caller', '~> 0.8.0'
-  gem 'faker', '~> 2.10.0'
-  # gem 'pry-byebug', '~> 3.8.0'
-end
-
-
-gem 'bootstrap'
-gem 'cancancan', '~> 3.0.0'
-gem 'devise', '~> 4.7.0'
-gem 'jquery-rails'
-gem 'mailjet', '~> 1.5.0'
-gem 'ransack', '2.3.0'
-gem 'responders'
-gem 'rubocop', '~> 0.80.1', require: false
-gem 'sassc-rails', '>= 2.1.0'
-gem 'sentry-raven', '~> 2.13.0'
-gem 'shrine', '~> 3.2.0'
-gem 'sidekiq-failures', '~> 1.0.0'
-gem 'sidekiq', '~> 6.0.0'
-gem 'simple_form', '~> 5.0.0'
-gem 'sprockets-rails'
-gem 'will_paginate', '~> 3.3.0'
-gem "font-awesome-rails"
-gem 'rolify'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
