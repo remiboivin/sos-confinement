@@ -5,7 +5,11 @@ class Doctor < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :availabilities
-  has_many :consultations, -> { where(status: "booked") }, through: :availabilities
+  has_many :consultations, through: :availabilities do
+    def booked
+      where("availabilities.booked = ?", true)
+    end
+  end
   has_many :users, through: :consultations
 
   validates :first_name, presence: true
