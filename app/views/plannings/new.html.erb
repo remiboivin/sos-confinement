@@ -1,0 +1,10 @@
+<h1>Créer une nouvelle disponibilité</h1>
+
+<p>Veuillez entrer un créneau (1h)</p>
+<%= simple_form_for @planning do |f| %>
+  <%= f.input :date_start, label: "Date" %>
+  <%= f.input :time_start, collection: (0..24).to_a, label: "De" %>
+  <%= f.input :time_end, collection: (0..24).to_a, label: "à"%>
+  <%= f.button :submit %>
+<% end %>
+
