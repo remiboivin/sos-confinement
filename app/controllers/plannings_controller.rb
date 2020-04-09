@@ -2,8 +2,8 @@ class PlanningsController < ApplicationController
   before_action :authenticate_volunteer!
 
   def index
-    @user_plannings = upcoming_plannings(current_volunteer.plannings)
-    @plannings = upcoming_plannings(Planning.all)
+    @user_plannings = sort_plannings(current_volunteer.plannings)
+    @plannings = sort_plannings(Planning.all)
   end
 
   def new
@@ -35,7 +35,7 @@ class PlanningsController < ApplicationController
 
   private
 
-  def upcoming_plannings(plannings)
+  def sort_plannings(plannings)
     sorted_plannings = plannings.sort_by do |planning|
       planning.date_start
     end

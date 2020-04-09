@@ -1,4 +1,9 @@
+<%= current_volunteer.name %>
+<%= current_volunteer.first_name %>
+
 <h1>Planning des tours de garde</h1>
+
+<h2>Prochain créneau libre</h2>
 
 
 <h2>Mes tours de garde à venir</h2>
@@ -15,7 +20,7 @@
 <h2>Planning général</h2>
 
 
-<%= month_calendar events: @plannings do |date, plannings| %>
+<%= week_calendar events: @plannings do |date, plannings| %>
   <%= date %>
   <% if plannings.empty? %>
     <div>
@@ -23,14 +28,18 @@
     </div>
   <% else %>
     <div>
-      <p>Voir</p>
+      <% plannings.each do |planning| %>
+        <div>
+          <small>De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
+        </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>
 
 <%= calendar number_of_days: 1, events: @plannings do |date, plannings| %>
   <%= date %>
-
+  <% p plannings %>
   <% plannings.each do |planning| %>
     <div>
       <small>De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
