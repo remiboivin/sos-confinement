@@ -109,6 +109,7 @@ GEM
     down (5.1.1)
       addressable (~> 2.5)
     erubi (1.9.0)
+    event-calendar (2.3.3)
     execjs (2.7.0)
     faker (2.10.2)
       i18n (>= 1.6, < 2)
@@ -286,6 +287,8 @@ GEM
       redis (>= 4.1.0)
     sidekiq-failures (1.0.0)
       sidekiq (>= 4.0.0)
+    simple_calendar (2.3.0)
+      rails (>= 3.0)
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -349,6 +352,7 @@ DEPENDENCIES
   cancancan (~> 3.0.0)
   capybara (>= 2.15)
   devise (~> 4.7.0)
+  event-calendar
   faker (~> 2.10.0)
   font-awesome-rails
   jbuilder (~> 2.7)
@@ -371,6 +375,7 @@ DEPENDENCIES
   shrine (~> 3.2.0)
   sidekiq (~> 6.0.0)
   sidekiq-failures (~> 1.0.0)
+  simple_calendar (~> 2.0)
   simple_form (~> 5.0.0)
   spring
   spring-watcher-listen (~> 2.0.0)

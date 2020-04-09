@@ -83,3 +83,5 @@ gem 'will_paginate', '~> 3.3.0'
 gem "font-awesome-rails"
 gem 'rolify'
 gem 'pry-byebug'
+gem "simple_calendar", "~> 2.0"
+

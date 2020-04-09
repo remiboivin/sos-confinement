@@ -1,4 +1,6 @@
 class PlanningsController < ApplicationController
+  before_action :authenticate_volunteer!
+
   def index
     @user_plannings = upcoming_plannings(current_volunteer.plannings)
     @plannings = upcoming_plannings(Planning.all)

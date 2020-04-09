@@ -14,8 +14,26 @@
 
 <h2>Planning général</h2>
 
-<ul>
-<% @plannings.each do |planning| %>
-  <li> <%= planning.volunteer.name %>: <%= planning.date_start %> - de <%= planning.time_start %> à <%= planning.time_end %></li>
+
+<%= month_calendar events: @plannings do |date, plannings| %>
+  <%= date %>
+  <% if plannings.empty? %>
+    <div>
+      <p><strong>VIDE</strong></p>
+    </div>
+  <% else %>
+    <div>
+      <p>Voir</p>
+    </div>
+  <% end %>
 <% end %>
-</ul>
+
+<%= calendar number_of_days: 1, events: @plannings do |date, plannings| %>
+  <%= date %>
+
+  <% plannings.each do |planning| %>
+    <div>
+      <small>De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
+    </div>
+  <% end %>
+<% end %>

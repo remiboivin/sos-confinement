@@ -3,6 +3,10 @@ class Planning < ApplicationRecord
 
   validate :validate_dates_and_times
 
+  def start_time
+    self.date_start
+  end
+
   private
 
   def validate_dates_and_times
