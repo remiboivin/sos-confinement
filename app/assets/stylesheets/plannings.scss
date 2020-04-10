@@ -1,3 +1,14 @@
 // Place all the styles related to the plannings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.myCell {
+    height: 80px;
+    border-top: 1px solid #777;
+  }
+  .green {
+    background-color: green;
+  }
+  .red {
+    background-color: red;
+  }

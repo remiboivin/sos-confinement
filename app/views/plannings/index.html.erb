@@ -19,30 +19,28 @@
 
 <h2>Planning général</h2>
 
-
 <%= week_calendar events: @plannings do |date, plannings| %>
   <%= date %>
-  <% if plannings.empty? %>
-    <div>
-      <p><strong>VIDE</strong></p>
-    </div>
-  <% else %>
-    <div>
+    <% 0.upto(24).each do |hour| %>
+    <div class="myCell">
+  <% if !plannings.empty? %>
       <% plannings.each do |planning| %>
+      <% if hour === planning.time_start.hour %>
         <div>
-          <small>De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
+          <small class="green">De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.email %></small>
         </div>
       <% end %>
-    </div>
-  <% end %>
-<% end %>
+      <% end %>
 
-<%= calendar number_of_days: 1, events: @plannings do |date, plannings| %>
-  <%= date %>
-  <% p plannings %>
-  <% plannings.each do |planning| %>
-    <div>
-      <small>De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
+      <% @user_plannings.each do |planning| %>
+      <% if date === planning.date_start && hour === planning.time_start.hour %>
+      <div class="red">
+        <small>De <%= planning.date_start %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.email %></small>
+      </div>
+      <% end %>
+      <% end %>
+    
+  <% end %>
     </div>
   <% end %>
 <% end %>
