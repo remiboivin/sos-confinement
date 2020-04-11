@@ -4,6 +4,7 @@ class PlanningsController < ApplicationController
   def index
     @user_plannings = sort_plannings(current_volunteer.plannings)
     @plannings = sort_plannings(Planning.all)
+    @next_empty_time_schedule = compute_next_empty_time_schedule
   end
 
   def new
@@ -34,6 +35,28 @@ class PlanningsController < ApplicationController
   end
 
   private
+
+  def compute_next_empty_time_schedule
+    date = Date.today
+    hour = Time.now.hour
+
+    upcoming_plannings = @plannings.select {|planning| (planning.date_start == date && time_start.hour > hour)}
+
+    if upcoming_plannings.empty?
+      next_empty_time_schedule = { date: date, hour_start: hour + 1, hour_end: hour + 2 }
+    else
+      i = hour + 1
+      upcoming_plannings.each do |planning|
+        if planning.time_start.hour == i
+          i += 1
+        else
+          next_empty_time_schedule = { date: date, hour_start: i, hour_end: i + 1 }
+        end
+      end
+    end
+
+    next_empty_time_schedule
+  end
 
   def sort_plannings(plannings)
     sorted_plannings = plannings.sort_by do |planning|
