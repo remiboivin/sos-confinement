@@ -23,24 +23,24 @@
   <%= date %>
     <% 0.upto(24).each do |hour| %>
     <div class="myCell">
-  <% if !plannings.empty? %>
+    <% if !plannings.empty? %>
       <% plannings.each do |planning| %>
       <% if hour === planning.time_start.hour %>
-        <div>
-          <small class="green">De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.email %></small>
-        </div>
+      <div>
+        <small class="green">De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
+      </div>
       <% end %>
       <% end %>
 
       <% @user_plannings.each do |planning| %>
       <% if date === planning.date_start && hour === planning.time_start.hour %>
       <div class="red">
-        <small>De <%= planning.date_start %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.email %></small>
+        <small>De <%= planning.date_start %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
       </div>
       <% end %>
       <% end %>
     
-  <% end %>
+    <% end %>
     </div>
   <% end %>
 <% end %>

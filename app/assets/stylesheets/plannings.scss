@@ -2,13 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+.day {
+  width: calc(100%/7);
+  float: left;
+}
 .myCell {
-    height: 80px;
-    border-top: 1px solid #777;
-  }
-  .green {
-    background-color: green;
-  }
-  .red {
-    background-color: red;
-  }
+  height: 60px;
+  border-top: 1px solid #777;
+  overflow: hidden;
+}
+.green {
+  background-color: green;
+}
+.red {
+  background-color: red;
+}

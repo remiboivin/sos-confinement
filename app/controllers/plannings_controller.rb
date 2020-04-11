@@ -40,7 +40,7 @@ class PlanningsController < ApplicationController
     date = Date.today
     hour = Time.now.hour
 
-    upcoming_plannings = @plannings.select {|planning| (planning.date_start == date && time_start.hour > hour)}
+    upcoming_plannings = @plannings.select {|planning| (planning.date_start == date && planning.time_start.hour > hour)}
 
     if upcoming_plannings.empty?
       next_empty_time_schedule = { date: date, hour_start: hour + 1, hour_end: hour + 2 }
