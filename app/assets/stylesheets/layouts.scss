@@ -1,0 +1,44 @@
+@import '/_vars';
+
+body {
+	background: $mainBackground;
+	margin: 0;
+	padding: 40px;
+}
+
+.page_wrapper {
+	display: grid;
+	position: relative;
+	grid-template-columns: repeat(6, 1fr);
+	grid-gap: 40px;
+	grid-auto-rows: minmax(50px, auto);
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+nav.menu {
+	grid-column: 1;
+	grid-row: 1 / 7;
+}
+
+section[class$="_next_uncover"] {
+	grid-area: 1 / 2 / 2 / 4;
+}
+
+section[class$="_my_guards"] {
+	// grid-area: 2 / 2 / 5 / 4;
+	grid-area: 2 / 2 / 7 / 4;
+}
+
+// section[class$="_guards_now"] {
+//   background: yellow;
+//   grid-area: 5 / 2 / 7 / 4;
+// }
+	
+section[class$="_planning"] {
+	grid-area: 1 / 4 / 7 / 7;
+}

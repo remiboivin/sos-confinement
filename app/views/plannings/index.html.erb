@@ -1,46 +1,55 @@
-<%= current_volunteer.name %>
-<%= current_volunteer.first_name %>
+<div class="page_wrapper">
 
-<h1>Planning des tours de garde</h1>
+  <nav class="menu">
 
-<h2>Prochain créneau sans permanence</h2>
-<p> Le <%= @next_empty_time_schedule[:date]%> de <%= @next_empty_time_schedule[:hour_start]%>h à <%= @next_empty_time_schedule[:hour_end]%>h </p>
+  </nav>
 
-<h2>Mes tours de garde à venir</h2>
+  <header>
+  <%= current_volunteer.first_name %> <%= current_volunteer.name %>
+  </header>
 
-<ul>
-<% @user_plannings.each do |planning| %>
-  <li> <%= planning.date_start %> - de <%= planning.time_start %> à <%= planning.time_end %></li>
-  <%= link_to "Supprimer", planning_path(planning), method: :delete, data: {confirm: "are you sure?"} %>
-<% end %>
-</ul>
+  <section class="box__next_uncover">
+    <h2>Prochain créneau sans permanence</h2>
+      <p> Le <%= @next_empty_time_schedule[:date]%> de <%= @next_empty_time_schedule[:hour_start]%>h à <%= @next_empty_time_schedule[:hour_end]%>h </p>
+  </section>
 
-<%= link_to "Ajouter", new_planning_path %>
-
-<h2>Planning général</h2>
-
-<%= week_calendar events: @plannings do |date, plannings| %>
-  <%= date %>
-    <% 0.upto(24).each do |hour| %>
-    <div class="myCell">
-    <% if !plannings.empty? %>
-      <% plannings.each do |planning| %>
-      <% if hour === planning.time_start.hour %>
-      <div>
-        <small class="green">De <%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
-      </div>
-      <% end %>
-      <% end %>
-
-      <% @user_plannings.each do |planning| %>
-      <% if date === planning.date_start && hour === planning.time_start.hour %>
-      <div class="red">
-        <small>De <%= planning.date_start %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></small>
-      </div>
-      <% end %>
-      <% end %>
-    
+  <section class="box__my_guards">
+    <h2>Mes gardes</h2>
+    <ul>
+    <% @user_plannings.each do |planning| %>
+      <li> <%= planning.date_start %> - de <%= planning.time_start %> à <%= planning.time_end %></li>
+      <%= link_to "Supprimer", planning_path(planning), method: :delete, data: {confirm: "are you sure?"} %>
     <% end %>
-    </div>
-  <% end %>
-<% end %>
+    </ul>
+    <%= link_to "Ajouter", new_planning_path %>
+  </section>
+
+  <section class="box__planning">
+    <h2>Permanence</h2>
+    <%= week_calendar events: @plannings do |date, plannings| %>
+      
+        <% 0.upto(23).each do |hour| %>
+          <% if !plannings.empty? || !@user_plannings.empty? %>
+          <div class="planning_cell">
+            <% plannings.each do |planning| %>
+              <% if hour === planning.time_start.hour %>
+                <div class="perm_slot">
+                  <div class="tooltip"><%= planning.time_start.hour %>h à <%= planning.time_end.hour %>h - <%= planning.volunteer.name %></div>
+                </div>
+              <% end %>
+            <% end %>
+
+            <% @user_plannings.each do |planning| %>
+              <% if date === planning.date_start && hour === planning.time_start.hour %>
+              <div class="guard_slot"></div>
+              <% end %>
+            <% end %>
+          
+          </div>
+          <% end %>
+        <% end %>
+        
+    <% end %>
+  </section>
+
+</div>
