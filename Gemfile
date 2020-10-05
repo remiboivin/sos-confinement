@@ -74,7 +74,7 @@ gem 'responders'
 gem 'rubocop', '~> 0.80.1', require: false
 gem 'sassc-rails', '>= 2.1.0'
 gem 'sentry-raven', '~> 2.13.0'
-gem 'shrine', '~> 3.2.0'
+gem 'shrine', '~> 3.3.0'
 gem 'sidekiq-failures', '~> 1.0.0'
 gem 'sidekiq', '~> 6.0.0'
 gem 'simple_form', '~> 5.0.0'
